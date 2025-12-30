@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.bg-main-color {
+    background: linear-gradient(135deg, #00296f, #00a2c5);
+    color: white;
+}
+
+.btn-main-color {
+    background: linear-gradient(135deg, #00296f, #00a2c5);
+    color: white;
+    transition: all ease-in-out .1s;
+}
+.btn-main-color:hover {
+    background: linear-gradient(135deg, #003a94, #11b9dd);
+}
+
+.saved-jobs-listing {
+    /* background-color: #F9FAFB; */
+}
+
+.saved-jobs-listing input {
+    background-color: #F9FAFB;
+    border: solid #7575752a 1px;
+    outline: none !important;
+}
+.saved-jobs-listing input:focus {
+    border: solid #00a2c5 2px !important;
+}
+
+.saved-jobs-listing label {
+    position: absolute;
+    margin-top: 8px;
+    transform: translateX(-417px);
+}
+
+.saved-jobs-listing i {
+    color: #757575;
+}
+
+.job-card {
+    transition: all ease-in-out .1s;
+}
+
+.job-card:hover {
+    border: solid #00a2c5 1px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.job-card button {
+    background-color: #00296f;
+    color: white;
+    transition: all ease-in-out .1s;
+}
+.job-card button:hover {
+    background-color: #003a94;
+}
+
+.job-card-skill {
+    background-color: #00a2c5;
+    color: white;
+    width: 6rem;
+    height: 1.7rem;
+}
+
+.save-btn {
+    background-color: white !important;
+    border: none;
+    transition: all ease-in-out .1s;
+}
+.save-btn:hover {
+    background-color: #F9FAFB !important;
+}
+
+.save-btn i {
+    color: #00296f !important;
+}
