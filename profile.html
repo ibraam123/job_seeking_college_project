@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobBoard - My Profile</title>
+        <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/briefcase.svg" type="image/svg+xml">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="bi bi-moon-fill" id="theme-icon"></i>
+    </button>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center w-100">
+            <a class="navbar-brand text-primary-custom fw-bold" href="#">
+                <i class="bi bi-briefcase-fill me-2 text-secondary-custom"></i>JobBoard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-search"></i> Browse Jobs</a></li>
+                    <li class="nav-item"><a href="saved-jobs.html" class="nav-link"><i class="bi bi-bookmark-fill"></i> Saved Jobs</a></li>
+                    <li class="nav-item"><a href="cv.html" class="nav-link"><i class="bi bi-file-earmark-text-fill"></i> CV Manager</a></li>
+                </ul>
+            </div>
+            
+            <div class="d-flex align-items-center">
+                
+                <div class="dropdown">
+                    <a class="btn btn-outline-secondary border-0 d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle fs-5 me-2"></i> 
+                        <span id="user-display-name" class="d-none d-lg-inline">John Doe</span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end custom-card p-0 mt-2">
+                        <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-fill me-2"></i> My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button class="dropdown-item text-danger" id="logout-btn"><i class="bi bi-box-arrow-right me-2"></i> Logout</button></li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="py-5 flex-grow-1">
+        <div class="container">
+            <div id="profile-view" class="pt-0">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="custom-card p-0 mb-4">
+                            <div class="profile-header-bg rounded-top-4"></div>
+                            
+                            <div class="row g-0 profile-content px-4 pb-4">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button id="edit-profile-btn" class="btn btn-outline-primary-custom btn-sm me-2"><i class="bi bi-pencil-square me-1"></i> Edit Profile</button>
+                                    <button id="save-profile-btn" class="btn btn-gradient btn-sm" style="display:none;"><i class="bi bi-save me-1"></i> Save Profile</button>
+                                </div>
+
+                                <div class="col-12 mt-4 d-flex align-items-center">
+                                    <div class="profile-img-container">
+                                        <input type="file" id="profile-img-input" accept="image/*" style="display: none;">
+                                        <img src="" alt="Profile Picture" class="profile-img" id="profile-img">
+                                        <div class="profile-img-upload" id="profile-img-upload-overlay" style="display: none;">
+                                            <i class="bi bi-camera-fill h4 mb-0"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ms-5 pt-2 flex-grow-1">
+                                        <div id="main-info-content" class="editable-content">
+                                            <div class="static-view">
+                                                <h4 class="fw-bold" id="display-name"></h4>
+                                                <p class="mb-1 text-muted" id="display-title"></p>
+                                                <p class="mb-1 text-muted" id="display-location"><i class="bi bi-geo-alt me-2"></i></p>
+                                                <p class="mb-1 text-muted" id="display-email"><i class="bi bi-envelope me-2"></i></p>
+                                                <p class="mb-1 text-muted" id="display-phone"><i class="bi bi-telephone me-2"></i></p>
+                                                <p class="mb-0 text-muted" id="display-portfolio">
+                                                    <i class="bi bi-link-45deg me-2"></i>
+                                                </p>
+                                            </div>
+                                            <div class="edit-view">
+                                                <div class="mb-2"><input type="text" class="form-control form-control-lg" id="edit-name" placeholder="Full Name"></div>
+                                                <div class="mb-2"><input type="text" class="form-control" id="edit-title" placeholder="Job Title"></div>
+                                                <div class="mb-2"><input type="text" class="form-control" id="edit-location" placeholder="Location"></div>
+                                                <div class="mb-2"><input type="email" class="form-control" id="edit-email" placeholder="Email"></div>
+                                                <div class="mb-2"><input type="tel" class="form-control" id="edit-phone" placeholder="Phone Number"></div>
+                                                <div><input type="url" class="form-control" id="edit-portfolio" placeholder="Portfolio Link (https://...)"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        
+                        <div class="custom-card mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold text-primary-custom">About</h5>
+                                <button class="btn btn-sm btn-outline-secondary edit-btn" onclick="toggleSectionEdit('about-content')" style="display:none;"><i class="bi bi-pencil"></i></button>
+                            </div>
+                            <div id="about-content" class="editable-content mt-3">
+                                <div class="static-view">
+                                    <p id="display-about-text"></p>
+                                </div>
+                                <div class="edit-view">
+                                    <textarea class="form-control" id="edit-about-text" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="custom-card mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold text-primary-custom">Experience</h5>
+                                <button class="btn btn-sm btn-outline-secondary edit-btn add-item-btn" data-type="experience" style="display:none;"><i class="bi bi-plus-lg me-1"></i> Add</button>
+                            </div>
+                            <div id="experience-items">
+                                </div>
+                        </div>
+
+                        <div class="custom-card mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold text-primary-custom">Education</h5>
+                                <button class="btn btn-sm btn-outline-secondary edit-btn add-item-btn" data-type="education" style="display:none;"><i class="bi bi-plus-lg me-1"></i> Add</button>
+                            </div>
+                            <div id="education-items">
+                                </div>
+                        </div>
+
+                        <div class="custom-card mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold text-primary-custom">Certifications</h5>
+                                <button class="btn btn-sm btn-outline-secondary edit-btn add-item-btn" data-type="certifications" style="display:none;"><i class="bi bi-plus-lg me-1"></i> Add</button>
+                            </div>
+                            <div id="certification-items">
+                                </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        
+                        <div class="custom-card mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold text-primary-custom">Skills</h5>
+                                <button class="btn btn-sm btn-outline-secondary edit-btn" onclick="toggleSectionEdit('skills-content')" style="display:none;"><i class="bi bi-pencil"></i></button>
+                            </div>
+                            <div id="skills-content" class="editable-content">
+                                <div class="static-view" id="static-skills-view">
+                                    </div>
+                                <div class="edit-view">
+                                    <input type="text" class="form-control" id="edit-skills-input" placeholder="Add skill and press Enter">
+                                    <small class="text-muted">Comma-separated list</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-card mb-4" id="profile-strength-card">
+                            <h5 class="fw-bold text-primary-custom mb-3">Profile Strength</h5>
+                            <div class="d-flex justify-content-between">
+                                <small class="fw-bold">Completeness</small>
+                                <small class="text-primary-custom fw-bold" id="completeness-percentage">85%</small>
+                            </div>
+                            <div class="completeness-bar-bg mt-1 mb-3">
+                                <div class="completeness-bar" id="completeness-bar" style="width: 85%;"></div>
+                            </div>
+                            <ul class="list-unstyled" id="completeness-list">
+                                <li id="check-photo" class="mb-2"><i class="bi bi-check-circle-fill me-2 text-success"></i> Profile photo added</li>
+                                <li id="check-bio" class="mb-2"><i class="bi bi-check-circle-fill me-2 text-success"></i> Bio completed</li>
+                                <li id="check-experience" class="mb-2"><i class="bi bi-check-circle-fill me-2 text-success"></i> Add Experience</li>
+                                <li id="check-education" class="mb-2"><i class="bi bi-check-circle-fill me-2 text-success"></i> Add Education</li>
+                                <li id="check-certifications" class="mb-2 text-primary-custom"><i class="bi bi-patch-check-fill me-2 text-secondary-custom"></i> Add certifications</li>
+                                <li id="check-portfolio" class="mb-2 text-muted"><i class="bi bi-circle-fill me-2" style="color: var(--input-border);"></i> Add portfolio link</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    
+    <footer class="footer mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold"><i class="bi bi-briefcase-fill me-2 text-secondary-custom"></i>JobBoard</h5>
+                    <p class="text-white-50">Your trusted platform for finding the perfect career opportunity.</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-bold text-secondary-custom mb-3">For Job Seekers</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Browse Jobs</a></li>
+                        <li><a href="cv.html">Career Advice</a></li>
+                        <li><a href="cv.html">Resume Tips</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-bold text-secondary-custom mb-3">Company</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-bold text-secondary-custom mb-3">Connect</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="bi bi-linkedin me-2"></i>LinkedIn</a></li>
+                        <li><a href="#"><i class="bi bi-twitter-x me-2"></i>Twitter</a></li>
+                        <li><a href="#"><i class="bi bi-facebook me-2"></i>Facebook</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255, 255, 255, 0.1);">
+            <div class="text-center text-white-50 mt-3">
+                © 2025 JobBoard. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+<div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-card p-0">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-primary-custom" id="itemModalLabel">Add New Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-2">
+                <form id="itemForm">
+                    <input type="hidden" id="itemTypeField" name="itemType">
+                    <input type="hidden" id="itemIndexField">
+                    
+                    <div id="dynamic-fields-container">
+                        <div class="mb-3">
+                            <label for="itemTitle" class="form-label">Title/Role</label>
+                            <input type="text" class="form-control" id="itemTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemOrganization" class="form-label">Company/Institution</label>
+                            <input type="text" class="form-control" id="itemOrganization" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="itemStartDate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="itemStartDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="itemEndDate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="itemEndDate">
+                                <div class="form-check mt-1">
+                                    <input class="form-check-input" type="checkbox" id="itemPresentCheck">
+                                    <label class="form-check-label" for="itemPresentCheck">I currently work here</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3" id="item-description-field">
+                        <label for="itemDescription" class="form-label">Description (Optional)</label>
+                        <textarea class="form-control" id="itemDescription" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" form="itemForm" class="btn btn-gradient" id="modalSaveButton">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/theme.js"></script>
+<script src="js/navbar.js"></script>
+<script type="module" src="controllers/ProfileController.js"></script>
+
+
+
+</body>
+</html>

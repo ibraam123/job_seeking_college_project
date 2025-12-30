@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Manager | JobBoard</title>
+        <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/briefcase.svg" type="image/svg+xml">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+   <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="bi bi-moon-fill" id="theme-icon"></i>
+    </button>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center w-100">
+            <a class="navbar-brand text-primary-custom fw-bold" href="#">
+                <i class="bi bi-briefcase-fill me-2 text-secondary-custom"></i>JobBoard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-search"></i> Browse Jobs</a></li>
+                    <li class="nav-item"><a href="saved-jobs.html" class="nav-link"><i class="bi bi-bookmark-fill"></i> Saved Jobs</a></li>
+                    <li class="nav-item"><a href="cv.html" class="nav-link active"><i class="bi bi-file-earmark-text-fill"></i> CV Manager</a></li>
+                </ul>
+            </div>
+            
+            <div class="d-flex align-items-center">
+                <!-- Login and Register buttons for visitors -->
+                <div id="visitor-buttons" class="d-none">
+                    <a href="login.html" class="btn btn-outline-secondary me-2">Login</a>
+                    <a href="register.html" class="btn btn-primary">Register</a>
+                </div>
+
+                <!-- User dropdown for logged-in users -->
+                <div class="dropdown" id="user-dropdown">
+                    <a class="btn btn-outline-secondary border-0 d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle fs-5 me-2"></i>
+                        <span id="user-display-name" class="d-none d-lg-inline"></span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end custom-card p-0 mt-2">
+                        <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-fill me-2"></i> My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button class="dropdown-item text-danger" id="logout-btn"><i class="bi bi-box-arrow-right me-2"></i> Logout</button></li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="page-title">CV Management</h1>
+                <p class="page-description">Manage your resumes and CVs for job applications</p>
+            </div>
+            <button class="btn-upload" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                <i class="bi bi-plus-lg"></i>
+                Upload New CV
+            </button>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stats-card" style="animation-delay: 0.1s;">
+                    <div class="stats-icon blue">
+                        <i class="bi bi-file-earmark-text-fill"></i>
+                    </div>
+                    <div class="stats-number" id="total-cvs">0</div> 
+                    <div class="stats-label">Total CVs</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card" style="animation-delay: 0.2s;">
+                    <div class="stats-icon green">
+                        <i class="bi bi-download"></i>
+                    </div>
+                    <div class="stats-number" id="total-downloads">0</div>
+                    <div class="stats-label">Times Downloaded</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card" style="animation-delay: 0.3s; cursor: pointer;" id="applications-card">
+                    <div class="stats-icon purple">
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <div class="stats-number" id="applications-sent">0</div>
+                    <div class="stats-label">Applications Sent</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cv-table-card">
+            <table class="cv-table">
+                <thead>
+                    <tr>
+                        <th>CV NAME</th>
+                        <th>LAST MODIFIED</th>
+                        <th>SIZE</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="cv-table-body">
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">Loading CVs...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="cv-table-card mt-4">
+            <h5 class="mb-3" style="font-weight: 600;">CV Tips</h5>
+            <ul style="color: var(--muted-light); line-height: 1.8;">
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Keep your CV updated with your latest experience and skills</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Tailor your CV for different types of positions (e.g., Frontend vs. Full Stack)</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Use your primary CV as the default for quick applications</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Convert documents to **PDF** to preserve formatting</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Use keywords relevant to the jobs you are applying for</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: var(--border-radius); background: #fff;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="uploadModalLabel" style="font-weight: 600;">Upload New Resume/CV</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <p class="text-muted small">Max file size: 5MB. Accepted formats: PDF, DOCX.</p>
+                    <form id="uploadForm">
+                        <div class="mb-3">
+                            <label for="cvName" class="form-label">CV Title/Name</label>
+                            <input type="text" class="form-control" id="cvName" placeholder="e.g., Senior Developer CV - Tech" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fileUpload" class="form-label">Select File</label>
+                            <input class="form-control" type="file" id="fileUpload" accept=".pdf,.docx" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="setPrimary">
+                            <label class="form-check-label" for="setPrimary">
+                                Set as Primary CV
+                            </label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn-upload">
+                                <i class="bi bi-cloud-arrow-up-fill"></i>
+                                Start Upload
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: var(--border-radius); background: #fff;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="editModalLabel" style="font-weight: 600;">Edit CV Metadata</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <form id="editForm">
+                        <input type="hidden" id="editCvId">
+                        <div class="mb-3">
+                            <label for="editCvName" class="form-label">CV Title/Name</label>
+                            <input type="text" class="form-control" id="editCvName" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="editSetPrimary">
+                            <label class="form-check-label" for="editSetPrimary">
+                                Set as Primary CV
+                            </label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn-upload">
+                                <i class="bi bi-save-fill"></i>
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="pdfViewModal" tabindex="-1" aria-labelledby="pdfViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content" style="border-radius: var(--border-radius); height: 90vh;">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="pdfViewModalLabel" style="font-weight: 600;">Viewing CV: <span id="viewCvTitle"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0" style="flex-grow: 1;">
+                    <iframe id="pdfViewerFrame" src="" width="100%" height="100%" frameborder="0" style="min-height: 60vh;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="appliedJobsModal" tabindex="-1" aria-labelledby="appliedJobsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius: var(--border-radius); background: #fff;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="appliedJobsModalLabel" style="font-weight: 600;">Applied Jobs</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <p class="text-muted small">Here are the jobs you have applied to:</p>
+                    <div id="applied-jobs-list" class="list-group">
+                        <!-- Applied jobs will be populated here -->
+                    </div>
+                    <div id="no-applications" class="text-center text-muted d-none">
+                        No applications sent yet.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold"><i class="bi bi-briefcase-fill me-2 text-secondary-custom"></i>JobBoard</h5>
+                    <p class="text-white-50">Your trusted platform for finding the perfect career opportunity.</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-bold text-secondary-custom mb-3">For Job Seekers</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Browse Jobs</a></li>
+                        <li><a href="cv.html">Career Advice</a></li>
+                        <li><a href="cv.html">Resume Tips</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-bold text-secondary-custom mb-3">Company</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-bold text-secondary-custom mb-3">Connect</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="bi bi-linkedin me-2"></i>LinkedIn</a></li>
+                        <li><a href="#"><i class="bi bi-twitter-x me-2"></i>Twitter</a></li>
+                        <li><a href="#"><i class="bi bi-facebook me-2"></i>Facebook</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255, 255, 255, 0.1);">
+            <div class="text-center text-white-50 mt-3">
+                © 2025 JobBoard. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/navbar.js"></script>
+<script type="module" src="js/cv.js"></script>
+<script type="module">
+    import { CvController } from "./controllers/CvController.js";
+    CvController.init();
+</script>
+
+</body>
+</html>
